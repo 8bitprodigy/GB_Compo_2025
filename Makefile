@@ -5,25 +5,24 @@
 
 # If you move this project you can change the directory 
 # to match your GBDK root directory (ex: GBDK_HOME = "C:/GBDK/"
-ifndef GBDK_HOME
-	GBDK_HOME = ../../../
-endif
+GBDK_HOME = /opt/gbdk/
+# -Wm-yC
+LCC = $(GBDK_HOME)bin/lcc
 
-LCC = $(GBDK_HOME)bin/lcc 
-
-# GBDK_DEBUG = ON
-ifdef GBDK_DEBUG
-	LCCFLAGS += -debug -v
-endif
+# You can set flags for LCC here
+# For example, you can uncomment the line below to turn on debug output
+LCCFLAGS += -debug # Uncomment to enable debug output
+LCCFLAGS += -v     # Uncomment for lcc verbose output
+#LCCFLAGS += --std-c23
 
 
 # You can set the name of the .gb ROM file here
-PROJECTNAME    = Example
+PROJECTNAME    = gb_compo_25
 
 SRCDIR      = src
 OBJDIR      = obj
 RESDIR      = res
-BINS	    = $(OBJDIR)/$(PROJECTNAME).gb
+BINS	    = $(PROJECTNAME).gb
 CSOURCES    = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.c))) $(foreach dir,$(RESDIR),$(notdir $(wildcard $(dir)/*.c)))
 ASMSOURCES  = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.s)))
 OBJS       = $(CSOURCES:%.c=$(OBJDIR)/%.o) $(ASMSOURCES:%.s=$(OBJDIR)/%.o)
@@ -59,6 +58,6 @@ prepare:
 	mkdir -p $(OBJDIR)
 
 clean:
-#	rm -f  *.gb *.ihx *.cdb *.adb *.noi *.map
-	rm -f  $(OBJDIR)/*.*
+	rm -f  *.gb *.ihx *.cdb *.adb *.noi *.map
+#	rm -f  $(OBJDIR)/*.*
 

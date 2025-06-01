@@ -50,3 +50,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# GameBoy files
+*.cdb
+*.gb
+*.ihx
+*.noi
+*.map

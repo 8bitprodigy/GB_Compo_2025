@@ -1,0 +1,220 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (Linux)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module gamestate
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _free
+                                     11 	.globl _malloc
+                                     12 	.globl _printf
+                                     13 	.globl _GameState_init
+                                     14 	.globl _GameState_new
+                                     15 	.globl _GameState_free
+                                     16 	.globl _GameState_run
+                                     17 	.globl _GameState_update
+                                     18 	.globl _GameState_draw
+                                     19 ;--------------------------------------------------------
+                                     20 ; special function registers
+                                     21 ;--------------------------------------------------------
+                                     22 ;--------------------------------------------------------
+                                     23 ; ram data
+                                     24 ;--------------------------------------------------------
+                                     25 	.area _DATA
+                                     26 ;--------------------------------------------------------
+                                     27 ; ram data
+                                     28 ;--------------------------------------------------------
+                                     29 	.area _INITIALIZED
+                                     30 ;--------------------------------------------------------
+                                     31 ; absolute external ram data
+                                     32 ;--------------------------------------------------------
+                                     33 	.area _DABS (ABS)
+                                     34 ;--------------------------------------------------------
+                                     35 ; global & static initialisations
+                                     36 ;--------------------------------------------------------
+                                     37 	.area _HOME
+                                     38 	.area _GSINIT
+                                     39 	.area _GSFINAL
+                                     40 	.area _GSINIT
+                                     41 ;--------------------------------------------------------
+                                     42 ; Home
+                                     43 ;--------------------------------------------------------
+                                     44 	.area _HOME
+                                     45 	.area _HOME
+                                     46 ;--------------------------------------------------------
+                                     47 ; code
+                                     48 ;--------------------------------------------------------
+                                     49 	.area _CODE
+                         00000000    50 	G$GameState_init$0$0	= .
+                                     51 	.globl	G$GameState_init$0$0
+                         00000000    52 	C$gamestate.c$19$0_0$164	= .
+                                     53 	.globl	C$gamestate.c$19$0_0$164
+                                     54 ;src/gamestate.c:19: GameState_init(GameState *game_state)
+                                     55 ;	---------------------------------
+                                     56 ; Function GameState_init
+                                     57 ; ---------------------------------
+    00000200                         58 _GameState_init::
+                         00000000    59 	C$gamestate.c$22$0_0$164	= .
+                                     60 	.globl	C$gamestate.c$22$0_0$164
+                                     61 ;src/gamestate.c:22: }
+                         00000000    62 	C$gamestate.c$22$0_0$164	= .
+                                     63 	.globl	C$gamestate.c$22$0_0$164
+                         00000000    64 	XG$GameState_init$0$0	= .
+                                     65 	.globl	XG$GameState_init$0$0
+    00000200 C9               [16]   66 	ret
+                         00000001    67 	G$GameState_new$0$0	= .
+                                     68 	.globl	G$GameState_new$0$0
+                         00000001    69 	C$gamestate.c$29$0_0$166	= .
+                                     70 	.globl	C$gamestate.c$29$0_0$166
+                                     71 ;src/gamestate.c:29: GameState_new(void)
+                                     72 ;	---------------------------------
+                                     73 ; Function GameState_new
+                                     74 ; ---------------------------------
+    00000201                         75 _GameState_new::
+                         00000001    76 	C$gamestate.c$31$1_0$166	= .
+                                     77 	.globl	C$gamestate.c$31$1_0$166
+                                     78 ;src/gamestate.c:31: GameState *game_state = malloc(sizeof(GameState));
+    00000201 11 02 00         [12]   79 	ld	de, #0x0002
+    00000204 CD 7B 03         [24]   80 	call	_malloc
+                         00000007    81 	C$gamestate.c$32$2_0$167	= .
+                                     82 	.globl	C$gamestate.c$32$2_0$167
+                                     83 ;src/gamestate.c:32: if (!game_state) {
+    00000207 78               [ 4]   84 	ld	a, b
+    00000208 B1               [ 4]   85 	or	a, c
+    00000209 20 0C            [12]   86 	jr	NZ, 00102$
+                         0000000B    87 	C$gamestate.c$33$3_0$168	= .
+                                     88 	.globl	C$gamestate.c$33$3_0$168
+                                     89 ;src/gamestate.c:33: printf("Could not allocate game_state!");
+    0000020B 11 1F 02         [12]   90 	ld	de, #___str_0
+    0000020E D5               [16]   91 	push	de
+    0000020F CD 7D 04         [24]   92 	call	_printf
+    00000212 E1               [12]   93 	pop	hl
+                         00000013    94 	C$gamestate.c$34$3_0$168	= .
+                                     95 	.globl	C$gamestate.c$34$3_0$168
+                                     96 ;src/gamestate.c:34: return NULL;
+    00000213 01 00 00         [12]   97 	ld	bc, #0x0000
+    00000216 C9               [16]   98 	ret
+    00000217                         99 00102$:
+                         00000017   100 	C$gamestate.c$37$1_0$166	= .
+                                    101 	.globl	C$gamestate.c$37$1_0$166
+                                    102 ;src/gamestate.c:37: GameState_init(game_state);
+    00000217 C5               [16]  103 	push	bc
+    00000218 59               [ 4]  104 	ld	e, c
+    00000219 50               [ 4]  105 	ld	d, b
+    0000021A CD 00 02         [24]  106 	call	_GameState_init
+    0000021D C1               [12]  107 	pop	bc
+                         0000001E   108 	C$gamestate.c$39$1_0$166	= .
+                                    109 	.globl	C$gamestate.c$39$1_0$166
+                                    110 ;src/gamestate.c:39: return game_state;
+                         0000001E   111 	C$gamestate.c$40$1_0$166	= .
+                                    112 	.globl	C$gamestate.c$40$1_0$166
+                                    113 ;src/gamestate.c:40: }
+                         0000001E   114 	C$gamestate.c$40$1_0$166	= .
+                                    115 	.globl	C$gamestate.c$40$1_0$166
+                         0000001E   116 	XG$GameState_new$0$0	= .
+                                    117 	.globl	XG$GameState_new$0$0
+    0000021E C9               [16]  118 	ret
+                         0000001F   119 Fgamestate$__str_0$0_0$0 == .
+    0000021F                        120 ___str_0:
+    0000021F 43 6F 75 6C 64 20 6E   121 	.ascii "Could not allocate game_state!"
+             6F 74 20 61 6C 6C 6F
+             63 61 74 65 20 67 61
+             6D 65 5F 73 74 61 74
+             65 21
+    0000023D 00                     122 	.db 0x00
+                         0000003E   123 	G$GameState_free$0$0	= .
+                                    124 	.globl	G$GameState_free$0$0
+                         0000003E   125 	C$gamestate.c$47$1_0$170	= .
+                                    126 	.globl	C$gamestate.c$47$1_0$170
+                                    127 ;src/gamestate.c:47: GameState_free(GameState *game_state)
+                                    128 ;	---------------------------------
+                                    129 ; Function GameState_free
+                                    130 ; ---------------------------------
+    0000023E                        131 _GameState_free::
+                         0000003E   132 	C$gamestate.c$49$1_0$170	= .
+                                    133 	.globl	C$gamestate.c$49$1_0$170
+                                    134 ;src/gamestate.c:49: free(game_state);
+                         0000003E   135 	C$gamestate.c$50$1_0$170	= .
+                                    136 	.globl	C$gamestate.c$50$1_0$170
+                                    137 ;src/gamestate.c:50: }
+                         0000003E   138 	C$gamestate.c$50$1_0$170	= .
+                                    139 	.globl	C$gamestate.c$50$1_0$170
+                         0000003E   140 	XG$GameState_free$0$0	= .
+                                    141 	.globl	XG$GameState_free$0$0
+    0000023E C3 79 02         [16]  142 	jp	_free
+                         00000041   143 	G$GameState_run$0$0	= .
+                                    144 	.globl	G$GameState_run$0$0
+                         00000041   145 	C$gamestate.c$57$1_0$172	= .
+                                    146 	.globl	C$gamestate.c$57$1_0$172
+                                    147 ;src/gamestate.c:57: GameState_run(GameState *game_state)
+                                    148 ;	---------------------------------
+                                    149 ; Function GameState_run
+                                    150 ; ---------------------------------
+    00000241                        151 _GameState_run::
+    00000241 D5               [16]  152 	push	de
+                         00000042   153 	C$gamestate.c$60$1_0$172	= .
+                                    154 	.globl	C$gamestate.c$60$1_0$172
+                                    155 ;src/gamestate.c:60: while (1) {
+    00000242                        156 00102$:
+                         00000042   157 	C$gamestate.c$61$2_0$173	= .
+                                    158 	.globl	C$gamestate.c$61$2_0$173
+                                    159 ;src/gamestate.c:61: GameState_update(game_state);
+    00000242 D1               [12]  160 	pop	de
+    00000243 D5               [16]  161 	push	de
+    00000244 CD 51 02         [24]  162 	call	_GameState_update
+                         00000047   163 	C$gamestate.c$62$2_0$173	= .
+                                    164 	.globl	C$gamestate.c$62$2_0$173
+                                    165 ;src/gamestate.c:62: GameState_draw(game_state);
+    00000247 D1               [12]  166 	pop	de
+    00000248 D5               [16]  167 	push	de
+    00000249 CD 52 02         [24]  168 	call	_GameState_draw
+    0000024C 18 F4            [12]  169 	jr	00102$
+                         0000004E   170 	C$gamestate.c$64$1_0$172	= .
+                                    171 	.globl	C$gamestate.c$64$1_0$172
+                                    172 ;src/gamestate.c:64: }
+    0000024E 33               [ 8]  173 	inc	sp
+    0000024F 33               [ 8]  174 	inc	sp
+                         00000050   175 	C$gamestate.c$64$1_0$172	= .
+                                    176 	.globl	C$gamestate.c$64$1_0$172
+                         00000050   177 	XG$GameState_run$0$0	= .
+                                    178 	.globl	XG$GameState_run$0$0
+    00000250 C9               [16]  179 	ret
+                         00000051   180 	G$GameState_update$0$0	= .
+                                    181 	.globl	G$GameState_update$0$0
+                         00000051   182 	C$gamestate.c$68$1_0$176	= .
+                                    183 	.globl	C$gamestate.c$68$1_0$176
+                                    184 ;src/gamestate.c:68: GameState_update(GameState *game_state)
+                                    185 ;	---------------------------------
+                                    186 ; Function GameState_update
+                                    187 ; ---------------------------------
+    00000251                        188 _GameState_update::
+                         00000051   189 	C$gamestate.c$72$1_0$176	= .
+                                    190 	.globl	C$gamestate.c$72$1_0$176
+                                    191 ;src/gamestate.c:72: }
+                         00000051   192 	C$gamestate.c$72$1_0$176	= .
+                                    193 	.globl	C$gamestate.c$72$1_0$176
+                         00000051   194 	XG$GameState_update$0$0	= .
+                                    195 	.globl	XG$GameState_update$0$0
+    00000251 C9               [16]  196 	ret
+                         00000052   197 	G$GameState_draw$0$0	= .
+                                    198 	.globl	G$GameState_draw$0$0
+                         00000052   199 	C$gamestate.c$76$1_0$179	= .
+                                    200 	.globl	C$gamestate.c$76$1_0$179
+                                    201 ;src/gamestate.c:76: GameState_draw(GameState *game_state)
+                                    202 ;	---------------------------------
+                                    203 ; Function GameState_draw
+                                    204 ; ---------------------------------
+    00000252                        205 _GameState_draw::
+                         00000052   206 	C$gamestate.c$79$1_0$179	= .
+                                    207 	.globl	C$gamestate.c$79$1_0$179
+                                    208 ;src/gamestate.c:79: }
+                         00000052   209 	C$gamestate.c$79$1_0$179	= .
+                                    210 	.globl	C$gamestate.c$79$1_0$179
+                         00000052   211 	XG$GameState_draw$0$0	= .
+                                    212 	.globl	XG$GameState_draw$0$0
+    00000252 C9               [16]  213 	ret
+                                    214 	.area _CODE
+                                    215 	.area _INITIALIZER
+                                    216 	.area _CABS (ABS)
