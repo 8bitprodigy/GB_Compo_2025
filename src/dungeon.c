@@ -150,7 +150,11 @@ generateSector(
 		*feature_left  = generateSector(left,  Depth+1, &sect_left),
 		*feature_right = generateSector(right, Depth+1, &sect_right);
 
-	
+	/*
+		Todo:
+			- generate corridor
+			- randomly decide which feature to return.
+	*/
 	
 } /* generateSector */
 
