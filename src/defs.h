@@ -26,6 +26,14 @@
 	#define SIGN_BETWEEN( a, b ) (((a)<(b))-((b)<(a)))
 	/* Check if a number is between two others */
 	#define IS_IN_BOUNDS( a, b, c ) ((b)<=(a)&&(a)<=(c))
+
+
+	/* Global constants */
+	#define MAX_LEVEL_SIZE  255
+	#define SECTOR_SIZE_INC 32
+	#define MAX_NUM_SECTORS 32
+	#define MIN_SECTOR_SIZE 8
+	#define MIN_ROOM_SIZE   4
 	
 
-#endif
+#endif /* DEFS_H */

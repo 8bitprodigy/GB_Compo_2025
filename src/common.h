@@ -8,6 +8,7 @@
 
 	#include <gb/gb.h>
 	#include <rand.h>
+	#include <stdbool.h>
 	#include <stdint.h>
 	#include <stdio.h>
 	#include <stdlib.h>
@@ -15,6 +16,10 @@
 	
 	#include "defs.h"
 
+
+/****************
+	T Y P E S
+****************/
 
 typedef int8_t   int8;
 typedef int16_t  int16;
@@ -26,12 +31,14 @@ enum
 {
 	X,
 	Y,
+	WIDTH,
+	HEIGHT,
 };
 
 enum
 {
-	WIDTH,
-	HEIGHT,
+	POSITION,
+	DIMENSION
 };
 
 
@@ -39,12 +46,14 @@ typedef union
 {
 	int8 v[2];
 	struct {
-		int8 x;
-		int8 y;
+		int8 
+			x,
+			y;
 	};
 	struct {
-		int8 w;
-		int8 h;
+		int8 
+			w,
+			h;
 	};
 }
 Vec2;
@@ -53,19 +62,84 @@ typedef union
 {
 	byte v[2];
 	struct {
-		byte x;
-		byte y;
+		byte 
+			x,
+			y;
 	};
 	struct {
-		byte w;
-		byte h;
+		byte 
+			w,
+			h;
 	};
 }
 UVec2;
+
+typedef union
+{
+	byte  r[4];
+	UVec2 v[2];
+	struct {
+		union {
+			byte  pos[2];
+			UVec2 position;
+			struct {
+				byte 
+					x,
+					y;
+			};
+			struct {
+				byte
+					x1,
+					y1;
+			};
+		};
+		union {
+			byte  dim[2];
+			UVec2 dimension;
+			struct {
+				byte 
+					w,
+					h;
+			};
+			UVec2 position2;
+			struct {
+				byte
+					x2,
+					y2;
+			};
+		};
+	};
+}
+Rectangle;
 
 
 typedef struct GameState GameState;
 typedef struct Actor     Actor;
 
 
-#endif
+/********************
+	M E T H O D S
+********************/
+
+inline byte
+randRange(byte Min, byte Max)
+{
+	byte difference = Max - Min;
+	return (rand() % difference) + Min;
+} /* randRange */
+
+inline bool
+isInRect(byte x, byte y, Rectangle *r) {
+	if (r==NULL) return false;
+	return (
+		r->x <=x 
+		&& x <= r->x + r->w
+	)
+	&& (
+		r->y <= y
+		&& y <= r->y + r->h
+	);
+} /* isInRect */
+
+
+#endif /* COMMON_H */

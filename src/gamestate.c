@@ -6,6 +6,19 @@
 typedef struct
 GameState
 {
+	union {
+		byte flags;
+		struct {
+			bool paused:1;
+			bool done  :1;
+			bool flag_2:1;
+			bool flag_3:1;
+			bool flag_4:1;
+			bool flag_5:1;
+			bool flag_6:1;
+			bool flag_7:1;
+		};
+	};
 	//Actor player;
 	UVec2 camera;
 }
@@ -57,7 +70,10 @@ void
 GameState_run(GameState *game_state)
 {
 	/* Initialize GameBoy resources */
-	while (1) {
+	SHOW_BKG;
+	DISPLAY_ON;
+	
+	for (;;) {
 		GameState_update(game_state);
 		GameState_draw(game_state);
 	}
@@ -69,6 +85,7 @@ GameState_update(GameState *game_state)
 {
 	/* Handle inputs */
 	/* Update entities */
+	printf("Hello World!\n");
 }
 
 
@@ -76,4 +93,6 @@ void
 GameState_draw(GameState *game_state)
 {
 	/* Draw everything */
+	
+	vsync();
 }

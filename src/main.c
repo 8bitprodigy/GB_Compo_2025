@@ -1,13 +1,10 @@
 #include "common.h"
+#include "gamestate.h"
 
 void
 main(void)
 {
-	SHOW_BKG;
-	DISPLAY_ON;
-	printf("Hello World!");
-	
-	while (1) {
-		vsync();
-	}
+	GameState *gs = GameState_new();
+
+	GameState_run(gs);
 }

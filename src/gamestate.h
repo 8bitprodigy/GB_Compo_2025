@@ -5,10 +5,9 @@
 
 
 /* Constructor */
-GameState *GameState_new();
+GameState *GameState_new(void);
 /* Initializer */
-void       GameState_init();
-
+void       GameState_init(GameState *game_state);
 /* Destructor */
 void       GameState_free(GameState *game_state);
 
@@ -20,4 +19,4 @@ void GameState_update(GameState *game_state);
 /*    Draw */
 void GameState_draw(GameState *game_state);
 	
-#endif
+#endif /* GAMESTATE_H */
