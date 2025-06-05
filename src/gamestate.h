@@ -2,6 +2,7 @@
 	#define GAMESTATE_H
 
 	#include "common.h"
+	#include "dungeon.h"
 
 
 /* Constructor */

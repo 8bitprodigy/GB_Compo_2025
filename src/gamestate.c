@@ -1,5 +1,11 @@
 #include "gamestate.h"
 
+
+/*
+	G L O B A L S
+*/
+static byte Joy_State;
+
 /*
 	D E F I N I T I O N
 */
@@ -31,7 +37,7 @@ GameState;
 void
 GameState_init(GameState *game_state)
 {
-	
+	Dungeon_generate(0, 0);
 }
 
 
@@ -84,6 +90,7 @@ void
 GameState_update(GameState *game_state)
 {
 	/* Handle inputs */
+	Joy_State = joypad();
 	/* Update entities */
 	printf("Hello World!\n");
 }

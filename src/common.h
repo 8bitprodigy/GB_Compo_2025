@@ -41,6 +41,12 @@ enum
 	DIMENSION
 };
 
+enum
+{
+	LEFT,
+	RIGHT
+};
+
 
 typedef union 
 {
@@ -131,14 +137,8 @@ randRange(byte Min, byte Max)
 inline bool
 isInRect(byte x, byte y, Rectangle *r) {
 	if (r==NULL) return false;
-	return (
-		r->x <=x 
-		&& x <= r->x + r->w
-	)
-	&& (
-		r->y <= y
-		&& y <= r->y + r->h
-	);
+	return IS_IN_BOUNDS(x, r->x1, r->x2)
+		&& IS_IN_BOUNDS(y, r->y1, r->y2);
 } /* isInRect */
 
 
