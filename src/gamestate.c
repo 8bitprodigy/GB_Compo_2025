@@ -44,7 +44,7 @@ GameState_init(GameState *game_state)
 	set_bkg_data(0, 255, ibm_bios_tiles);
 	SHOW_BKG;
 	Dungeon_generate(0, 0);
-	Dungeon_plotTiles(0,0, SCREEN_WIDTH_IN_TILES, SCREEN_HEIGHT_IN_TILES);
+	Dungeon_plotTiles(0, 0, SCREEN_WIDTH_IN_TILES, SCREEN_HEIGHT_IN_TILES);
 	DISPLAY_ON;
 }
 
@@ -88,7 +88,7 @@ GameState_run(GameState *game_state)
 	
 	for (;;) {
 		GameState_update(game_state);
-		//GameState_draw(game_state);
+		GameState_draw(game_state);
 	}
 }
 

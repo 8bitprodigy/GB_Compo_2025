@@ -247,18 +247,25 @@ Dungeon_generate(word Seed, byte Level)
 byte
 getSectorTile(byte Index, byte x, byte y)
 {
+	if (Index > 32) {
+		return 0;
+	}
+	
 	Sector *sector = &Dungeon.sectors[Index];
 	
-	/*if (!isInRect(x, y, &sector->zone)) { 
+	if (!isInRect(x, y, &sector->zone)) { 
 		return 0;
-	}*/
+	}
 	if (
 		sector->leaf
 		&& isInRect(x, y, &sector->feature)
 	) {
 		return 1;
 	}
-
+	if (sector->depth >= 4) {
+		return 0;
+	}
+	
 	byte
 		tile_left  = getSectorTile( 2 * Index + 1, x, y),
 		tile_right = getSectorTile( 2 * Index + 2, x, y);
