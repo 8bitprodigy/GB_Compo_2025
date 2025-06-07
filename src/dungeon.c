@@ -62,12 +62,12 @@ generateRoom(
 		height          = randRange(MIN_ROOM_SIZE, max_room_height),
 		position_x      = randRange(Zone->x, Zone->x + (Zone->w - width)),
 		position_y      = randRange(Zone->y, Zone->y + (Zone->h - height));
-	Rectangle room = {
-		.x = position_x,
-		.y = position_y,
-		.w = width,
-		.h = height,
-	};
+	Rectangle room;
+	
+	room.x = Zone->x+1,
+	room.y = Zone->y+1,
+	room.w = max_room_width,
+	room.h = max_room_height;
 
 	Dungeon.sectors[Index].leaf    = true;
 	Dungeon.sectors[Index].kind    = ROOM;
@@ -200,14 +200,14 @@ generateSector(
 	}
 	
 	if (split_axis) {
-		sector->feature.x1 = feature_left->x2;
-		sector->feature.y1 = randRange(left_range_lo, left_range_hi);
-		sector->feature.x2 = feature_right->x1;
+		sector->feature.x1 = feature_left->x2,
+		sector->feature.y1 = randRange(left_range_lo, left_range_hi),
+		sector->feature.x2 = feature_right->x1,
 		sector->feature.y2 = randRange(right_range_lo, right_range_hi);
 		
-		sector->feature.x1 = randRange(left_range_lo, left_range_hi);
-		sector->feature.y1 = feature_left->y2;
-		sector->feature.x2 = randRange(right_range_lo, right_range_hi);
+		sector->feature.x1 = randRange(left_range_lo, left_range_hi),
+		sector->feature.y1 = feature_left->y2,
+		sector->feature.x2 = randRange(right_range_lo, right_range_hi),
 		sector->feature.y2 = feature_right->y1;
 	}
 
@@ -234,12 +234,11 @@ Dungeon_generate(word Seed, byte Level)
 	Dungeon.level = Level;
 	initrand(Seed);
 	
-	Rectangle zone = {
-		.x = 0,
-		.y = 0,
-		.x2 = MAX_LEVEL_SIZE,
-		.y2 = MAX_LEVEL_SIZE,
-	};
+	Rectangle zone;
+	zone.x1 = 0,
+	zone.y1 = 0,
+	zone.x2 = MAX_LEVEL_SIZE,
+	zone.y2 = MAX_LEVEL_SIZE;
 	
 	generateSector(0, 0, &zone);
 } /* Dungeon_generate */
@@ -250,26 +249,55 @@ getSectorTile(byte Index, byte x, byte y)
 {
 	Sector *sector = &Dungeon.sectors[Index];
 	
-	if (!isInRect(x, y, sector->zone)) { 
+	/*if (!isInRect(x, y, &sector->zone)) { 
 		return 0;
-	}
-	if (isInRect(x, y, sector->feature)) {
+	}*/
+	if (
+		sector->leaf
+		&& isInRect(x, y, &sector->feature)
+	) {
 		return 1;
 	}
 
 	byte
-		left  = 2 * Index + 1,
-		right = 2 * Index + 2;
+		tile_left  = getSectorTile( 2 * Index + 1, x, y),
+		tile_right = getSectorTile( 2 * Index + 2, x, y);
+
+	if (tile_left) return tile_left;
+	if (tile_right) return tile_right;
 	
-	/*
-		TODO:
-			- check left and right children
-	*/
-}
+	return isInRect(x, y, &sector->feature);
+} /* getSectorTile */
 
 
-byte
+inline byte
 Dungeon_getTile(byte x, byte y)
 {
 	return getSectorTile(0, x, y);
 } /* Dungeon_getTile */
+
+inline void
+Dungeon_plotTile(byte x, byte y)
+{
+	set_bkg_tile_xy(
+		x, 
+		y, 
+		Dungeon_getTile(x, y)
+	);
+}
+
+inline void
+Dungeon_plotTiles(
+	byte x,
+	byte y,
+	byte w,
+	byte h
+)
+{
+	byte
+		i,
+		j;
+	for (i = 0; i < w; i++) 
+		for (j = 0; j < h; j++)
+			Dungeon_plotTile(x+i, y+j);
+}

@@ -29,6 +29,9 @@
 
 
 	/* Global constants */
+	#define SCREEN_WIDTH_IN_TILES  20
+	#define SCREEN_HEIGHT_IN_TILES 16
+	
 	#define MAX_LEVEL_SIZE  255
 	#define SECTOR_SIZE_INC 32
 	#define MAX_NUM_SECTORS 32

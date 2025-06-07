@@ -1,4 +1,6 @@
 #include "gamestate.h"
+#include "defs.h"
+#include "../res/ibm_bios.h"
 
 
 /*
@@ -37,7 +39,13 @@ GameState;
 void
 GameState_init(GameState *game_state)
 {
+    DISPLAY_OFF;
+	init_bkg(0);
+	set_bkg_data(0, 255, ibm_bios_tiles);
+	SHOW_BKG;
 	Dungeon_generate(0, 0);
+	Dungeon_plotTiles(0,0, SCREEN_WIDTH_IN_TILES, SCREEN_HEIGHT_IN_TILES);
+	DISPLAY_ON;
 }
 
 
@@ -76,12 +84,11 @@ void
 GameState_run(GameState *game_state)
 {
 	/* Initialize GameBoy resources */
-	SHOW_BKG;
-	DISPLAY_ON;
+	GameState_init(game_state);
 	
 	for (;;) {
 		GameState_update(game_state);
-		GameState_draw(game_state);
+		//GameState_draw(game_state);
 	}
 }
 
@@ -92,7 +99,7 @@ GameState_update(GameState *game_state)
 	/* Handle inputs */
 	Joy_State = joypad();
 	/* Update entities */
-	printf("Hello World!\n");
+	//printf("Hello World!\n");
 }
 
 
