@@ -60,14 +60,16 @@ generateRoom(
 		max_room_height = Zone->h-2,
 		width           = randRange(MIN_ROOM_SIZE, max_room_width),
 		height          = randRange(MIN_ROOM_SIZE, max_room_height),
-		position_x      = randRange(Zone->x, Zone->x + (Zone->w - width)),
-		position_y      = randRange(Zone->y, Zone->y + (Zone->h - height));
+		position_x1     = randRange(Zone->x, Zone->x + (Zone->w - width)),
+		position_y1     = randRange(Zone->y, Zone->y + (Zone->h - height)),
+		position_x2     = position_x1 + width,
+		position_y2     = position_y1 + height;
 	Rectangle room;
 	
-	room.x = Zone->x+1,
-	room.y = Zone->y+1,
-	room.w = max_room_width,
-	room.h = max_room_height;
+	room.x1 = position_x1; //Zone->x + 1,
+	room.y1 = position_y1; //Zone->y + 1,
+	room.x2 = position_x2; //Zone->x + max_room_width  - 1,
+	room.y2 = position_y2; //Zone->y + max_room_height - 1;
 
 	Dungeon.sectors[Index].leaf    = true;
 	Dungeon.sectors[Index].kind    = ROOM;

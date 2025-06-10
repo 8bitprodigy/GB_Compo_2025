@@ -1,6 +1,7 @@
 #include "gamestate.h"
 #include "defs.h"
 #include "../res/ibm_bios.h"
+#include "dungeon.h"
 
 
 /*
@@ -84,7 +85,6 @@ void
 GameState_run(GameState *game_state)
 {
 	/* Initialize GameBoy resources */
-	GameState_init(game_state);
 	
 	for (;;) {
 		GameState_update(game_state);
