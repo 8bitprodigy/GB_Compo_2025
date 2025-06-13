@@ -7,11 +7,36 @@
 /*
 	G L O B A L S
 */
-static byte Joy_State;
 
 /*
 	D E F I N I T I O N
 */
+
+enum {
+	JOY_CURRENT,
+	JOY_PREVIOUS,
+	JOY_DIFFERENCE,
+};
+
+
+typedef union
+JoyState
+{
+	byte state;
+	struct {
+		bool right :1;
+		bool left  :1;
+		bool up    :1;
+		bool down  :1;
+		bool a     :1;
+		bool b     :1;
+		bool select:1;
+		bool start :1;
+	};
+}
+JoyState;
+
+
 typedef struct
 GameState
 {
@@ -28,10 +53,25 @@ GameState
 			bool flag_7:1;
 		};
 	};
+
+	union {
+		byte joystates[3];
+		struct {
+			JoyState joy_current;
+			JoyState joy_previous;
+			JoyState joy_difference;
+		};
+	};
+	Vec2 dpad_dir;
 	//Actor player;
 	UVec2 camera;
 }
 GameState;
+
+/*
+	F O R W A R D    D E C L A R A T I O N S
+*/
+void handleScrolling(GameState *game_state);
 
 
 /*
@@ -97,9 +137,15 @@ void
 GameState_update(GameState *game_state)
 {
 	/* Handle inputs */
-	Joy_State = joypad();
+	game_state->joy_previous.state   = game_state->joy_current.state;
+	game_state->joy_current.state    = joypad();
+	game_state->joy_difference.state = game_state->joy_current.state ^ game_state->joy_previous.state;
+
+	game_state->dpad_dir.x     = game_state->joy_current.right - game_state->joy_current.left;
+	game_state->dpad_dir.y     = game_state->joy_current.down  - game_state->joy_current.up;
 	/* Update entities */
-	//printf("Hello World!\n");
+	if (game_state->joy_difference.state == 0) return;
+	handleScrolling(game_state);
 }
 
 
@@ -109,4 +155,49 @@ GameState_draw(GameState *game_state)
 	/* Draw everything */
 	
 	vsync();
+}
+
+/*
+	P R I V A T E    F U N C T I O N S
+*/
+void
+handleScrolling(GameState *game_state)
+{
+	game_state->camera.x += game_state->dpad_dir.x;
+	game_state->camera.y += game_state->dpad_dir.y;
+
+	if (0 < game_state->dpad_dir.x) {
+		Dungeon_plotTiles(
+			game_state->camera.x + SCREEN_WIDTH_IN_TILES - game_state->dpad_dir.x,
+			game_state->camera.y,
+			game_state->dpad_dir.x,
+			SCREEN_HEIGHT_IN_TILES
+		);
+	}
+	if (game_state->dpad_dir.x < 0) {
+		Dungeon_plotTiles(
+			game_state->camera.x,
+			game_state->camera.y,
+			abs(game_state->dpad_dir.x),
+			SCREEN_HEIGHT_IN_TILES
+		);
+	}
+	if (0 < game_state->dpad_dir.y) {
+		Dungeon_plotTiles(
+			game_state->camera.x,
+			game_state->camera.y + SCREEN_HEIGHT_IN_TILES - game_state->dpad_dir.y,
+			SCREEN_WIDTH_IN_TILES,
+			game_state->dpad_dir.y
+		);
+	}
+	if (game_state->dpad_dir.y < 0) {
+		Dungeon_plotTiles(
+			game_state->camera.x,
+			game_state->camera.y,
+			SCREEN_WIDTH_IN_TILES,
+			abs(game_state->dpad_dir.y)
+		);
+	}
+
+	move_bkg(game_state->camera.x << 3, game_state->camera.y << 3);
 }

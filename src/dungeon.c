@@ -113,7 +113,7 @@ generateSector(
 	
 	byte
 		left  = 2 * Index + 1,
-		right = 2 * Index + 1,
+		right = 2 * Index + 2,
 		middle = (split_axis) 
 			? randRange(
 				Zone->y + MIN_SECTOR_SIZE, 
@@ -131,27 +131,29 @@ generateSector(
 		*feature_right;
 
 	
-	if (split_axis) {
-		zone_left.x1 = Zone->x1;
-		zone_left.y1 = Zone->y1;
-		zone_left.x2 = middle;
-		zone_left.y2 = Zone->y2;
-		
-		zone_right.x1 = middle + 1;
-		zone_right.y1 = Zone->y1;
-		zone_right.x2 = Zone->x2;
-		zone_right.y2 = Zone->y2;
+	if (split_axis) { /* Y Axis */
+	
+			zone_left.x1 = Zone->x1;
+			zone_left.y1 = Zone->y1;
+			zone_left.x2 = Zone->x2;
+			zone_left.y2 = middle;
+			
+			zone_right.x1 = Zone->x1;
+			zone_right.y1 = middle + 1;
+			zone_right.x2 = Zone->x2;
+			zone_right.y2 = Zone->y2;
 		
 	} else {
-		zone_left.x1 = Zone->x1;
-		zone_left.y1 = Zone->y1;
-		zone_left.x2 = Zone->x2;
-		zone_left.y2 = middle;
 		
-		zone_right.x1 = Zone->x1;
-		zone_right.y1 = middle + 1;
-		zone_right.x2 = Zone->x2;
-		zone_right.y2 = Zone->y2;
+			zone_left.x1 = Zone->x1;
+			zone_left.y1 = Zone->y1;
+			zone_left.x2 = middle;
+			zone_left.y2 = Zone->y2;
+			
+			zone_right.x1 = middle + 1;
+			zone_right.y1 = Zone->y1;
+			zone_right.x2 = Zone->x2;
+			zone_right.y2 = Zone->y2;
 		
 	}
 
@@ -202,11 +204,14 @@ generateSector(
 	}
 	
 	if (split_axis) {
+		
 		sector->feature.x1 = feature_left->x2,
 		sector->feature.y1 = randRange(left_range_lo, left_range_hi),
 		sector->feature.x2 = feature_right->x1,
 		sector->feature.y2 = randRange(right_range_lo, right_range_hi);
 		
+	} else {
+			
 		sector->feature.x1 = randRange(left_range_lo, left_range_hi),
 		sector->feature.y1 = feature_left->y2,
 		sector->feature.x2 = randRange(right_range_lo, right_range_hi),
@@ -262,10 +267,7 @@ getSectorTile(byte Index, byte x, byte y)
 		sector->leaf
 		&& isInRect(x, y, &sector->feature)
 	) {
-		return 1;
-	}
-	if (sector->depth >= 4) {
-		return 0;
+		return 176;
 	}
 	
 	byte
